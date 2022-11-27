@@ -1,25 +1,24 @@
-import logo from './logo.svg';
+import React from 'react';
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
 import './App.css';
 
-function App() {
+const App = () => {
+  const data = [
+      {name: 'Top 1%', x: 31.80, y: 0.33},
+      {name: '99 - 90%', x: 37.30, y: 3.00},
+      {name: '90 - 50%', x: 28.10, y: 13.33},
+      {name: 'Bottom 50%', x: 2.80, y: 16.67}
+  ];
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BarChart width={500} height={500} data={data} >
+      
+      <XAxis dataKey="name" />
+      <YAxis />
+      <Bar dataKey="x" stackId="a" fill="#4d79ff" />
+      <Bar dataKey="y" stackId="a" fill="#ff3333" />
+    </BarChart>
+  )
 }
 
 export default App;
