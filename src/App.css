@@ -36,3 +36,13 @@
     transform: rotate(360deg);
   }
 }
+
+.mergeButtons {
+  margin-left: 7%;
+}
+
+.mergeButton {
+  margin-left: 2%;
+  display: inline;
+  font-size: small;
+}

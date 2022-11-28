@@ -8,18 +8,19 @@ function GetChartData(bars)
     ];
 
     let groupedBars = [];
-
-    for(let i; i < bars.length; i++) {
+    for(let i = 0; i < bars.length; i++) {
         let nlabel = fullChart[bars[i][0]].from.toString() + ' - ' + fullChart[bars[i][bars[i].length - 1]].to.toString();
         let nx = 0;
-        for(let j; j < bars[i].length; j++) {
+        for(let j = 0; j < bars[i].length; j++) {
             nx += fullChart[bars[i][j]].x;
         }
-        groupedBars.push({label: nlabel, x: nx});
+        groupedBars.push({name: nlabel, x: nx, y: 0, fill: "#9a9cb8"});
     }
 
     return groupedBars;
 }
+
+export default GetChartData;
 
 function AddUbi(bars, ubiAmount)
 {
