@@ -20,3 +20,8 @@ function GetChartData(bars)
 
     return groupedBars;
 }
+
+function AddUbi(bars, ubiAmount)
+{
+    //TODO: add UbI to the bars
+}
