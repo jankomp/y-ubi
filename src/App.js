@@ -1,5 +1,6 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { Switch, FormControlLabel } from '@mui/material';
 import './App.css';
 
 const App = () => {
@@ -11,14 +12,17 @@ const App = () => {
   ];
 
   return (
-    <BarChart width={500} height={500} data={data} >
-      
-      <XAxis dataKey="name" />
-      <YAxis />
-      <Bar dataKey="x" stackId="a" fill="#4d79ff" />
-      <Bar dataKey="y" stackId="a" fill="#ff3333" />
-    </BarChart>
-  )
+    <>
+      <FormControlLabel control ={<Switch  />} label="UBI" />
+      <BarChart width={500} height={500} data={data} >
+          
+          <XAxis dataKey="name" />
+          <YAxis />
+          <CartesianGrid horizontal={true} vertical={false} />
+          <Bar dataKey="x" stackId="a" fill="#4d79ff" />
+          <Bar dataKey="y" stackId="a" fill="#ff3333" />
+        </BarChart>
+    </>)
 }
 
 export default App;
