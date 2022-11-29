@@ -21,7 +21,7 @@ function GetChartData(bars, UbI, UbIAmount)
             ubiForGroup = UbIAmount*size;
         }
 
-        groupedBars.push({name: nlabel, x: nx, y: ubiForGroup, fill: fillColor});
+        groupedBars.push({name: nlabel, x: nx, y: ubiForGroup, color: fillColor});
     }
 
     return groupedBars;

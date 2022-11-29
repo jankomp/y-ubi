@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { Switch, FormControlLabel } from '@mui/material';
 import GetChartData from './ChartData';
 import './App.css';
@@ -44,13 +44,17 @@ const App = () => {
 
   return (
     <>
-      <FormControlLabel control ={<Switch  />} label="UBI" onChange={applyUbi}/>
+      <FormControlLabel control ={<Switch className="ubiSwitch" />} label="UBI" onChange={applyUbi}/>
       <BarChart width={400} height={400} data={data} barSize={40}>
         <XAxis dataKey="name" />
         <YAxis domain={[0, 100]}/>
         <CartesianGrid horizontal={true} vertical={false} />
-        <Bar dataKey="x" stackId="a" fill="#4d79ff" />
-        <Bar dataKey="y" stackId="a" fill="#ff3333" />
+        <Bar dataKey="x" stackId="a">
+          {data.map((item, index) => {
+            return <Cell key={index} fill={item.color} />;
+          })}
+        </Bar>
+        <Bar dataKey="y" stackId="a" fill="#ff3333" fillRule='inherit' />
       </BarChart>
       <div className='mergeButtons'>
         {
