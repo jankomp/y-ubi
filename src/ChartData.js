@@ -15,13 +15,13 @@ function GetChartData(bars, UbI, UbIAmount)
         for(let j = 0; j < bars[i].length; j++) {
             nx += fullChart[bars[i][j]].x;
         }
-        const fillColor = (bars[i].length === 1) ? "#9a9cb8" : "#4d79ff";
+        const singleBar = (bars[i].length === 1);
         let ubiForGroup = 0;
         if (UbI) {
             ubiForGroup = UbIAmount*size;
         }
 
-        groupedBars.push({name: nlabel, x: nx, y: ubiForGroup, color: fillColor});
+        groupedBars.push({name: nlabel, x: nx, y: ubiForGroup, singleBar: singleBar});
     }
 
     return groupedBars;
