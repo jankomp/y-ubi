@@ -2,12 +2,13 @@ import React, { useState } from 'react';
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { Switch, FormControlLabel } from '@mui/material';
 import GetChartData from './ChartData';
+import { GiPerson } from "react-icons/gi";
 import './App.css';
 
 let UbI = false;
-let ChartGroups = Array.from([[0],[1],[2],[3]]);
+let ChartGroups = Array.from([[0, 1, 2, 3]]);
 
-const ubiAmount = 0.33;
+const ubiAmount = 0.0265;
 
 const App = () => {
   
@@ -58,6 +59,27 @@ const App = () => {
     return buffer;
   }
 
+  function getPersonGrid(bar) {
+      let buffer = [];
+      const size = bar.from - bar.to;
+      let j = 0;
+      let line = 0;
+      for(let i = 0; i < 100; i++) {
+        j += 1;
+        let visible = 100 - i > bar.to && 100 - i <= bar.from;
+        let icon = visible ? (<GiPerson/>) : (<GiPerson className="invisiblePerson"/>); 
+        if (j === 10)
+        {
+          j = 0;
+          buffer.push(<>{icon}<br key={"linebreak_" + line}/></>)
+          line += 1;
+        } else {
+          buffer.push(icon)
+        }
+      }
+      return buffer;
+  }
+
   return (
     <>
       <FormControlLabel control ={<Switch className="ubiSwitch" />} label="UBI" onChange={applyUbi}/>
@@ -74,13 +96,24 @@ const App = () => {
             }
           })}
         </Bar>
-        <Bar dataKey="y" stackId="a" fill="#ff3333" fillRule='inherit' />
+        <Bar dataKey="y" stackId="a" fill="#ff3333"/>
       </BarChart>
       <div className='mergeButtons'>
         {
           getMergeButtons()
         }
       </div>
+      <table className='personGrids'>
+        <tbody>
+        <tr>
+        {
+          data.map((bar) => {
+            return (<td key={bar.name} className='personGrid'>{getPersonGrid(bar)}</td>)
+          })
+        }
+        </tr>
+        </tbody>
+      </table>
     </>)
 }
 

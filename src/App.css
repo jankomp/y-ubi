@@ -50,3 +50,21 @@
 .ubiSwitch {
   fill: "#ff3333";
 }
+
+.person {
+  display: inline;
+  margin-top: -5%;
+}
+
+.invisiblePerson {
+  visibility: hidden;
+}
+
+.personGrid {
+  margin-left: 4%;
+  margin-right: 4%;
+}
+
+.personGrids {
+  margin-left: 5%;
+}

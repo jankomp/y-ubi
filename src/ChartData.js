@@ -11,6 +11,9 @@ function GetChartData(bars, UbI, UbIAmount)
     for(let i = 0; i < bars.length; i++) {
         let nlabel = fullChart[bars[i][0]].from.toString() + ' - ' + fullChart[bars[i][bars[i].length - 1]].to.toString();
         const size = fullChart[bars[i][0]].from - fullChart[bars[i][bars[i].length - 1]].to;
+        const from = fullChart[bars[i][0]].from;
+        const to = fullChart[bars[i][bars[i].length - 1]].to;
+
         let nx = 0;
         for(let j = 0; j < bars[i].length; j++) {
             nx += fullChart[bars[i][j]].x;
@@ -21,7 +24,7 @@ function GetChartData(bars, UbI, UbIAmount)
             ubiForGroup = UbIAmount*size;
         }
 
-        groupedBars.push({name: nlabel, x: nx, y: ubiForGroup, singleBar: singleBar});
+        groupedBars.push({name: nlabel, from: from, to: to, x: nx, y: ubiForGroup, singleBar: singleBar});
     }
 
     return groupedBars;
