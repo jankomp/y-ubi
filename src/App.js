@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid } from 'recharts';
-import { Switch, FormControlLabel } from '@mui/material';
+import { Switch, FormControlLabel, Slider, Box } from '@mui/material';
 import GetChartData from './ChartData';
 import { GiPerson } from "react-icons/gi";
 import './App.css';
@@ -8,10 +8,9 @@ import './App.css';
 let UbI = false;
 let ChartGroups = Array.from([[0, 1, 2, 3]]);
 
-const ubiAmount = 0.0265;
+let ubiAmount = 0.0265;
 
 const App = () => {
-  
   const [data, setData] = useState(GetChartData(ChartGroups, UbI, ubiAmount));
 
   const applyUbi = (e) => {
@@ -67,7 +66,7 @@ const App = () => {
       for(let i = 0; i < 100; i++) {
         j += 1;
         let visible = 100 - i > bar.to && 100 - i <= bar.from;
-        let icon = visible ? (<GiPerson/>) : (<GiPerson className="invisiblePerson"/>); 
+        let icon = visible ? (<GiPerson size={12}/>) : (<GiPerson size={12} className="invisiblePerson"/>); 
         if (j === 10)
         {
           j = 0;
@@ -80,13 +79,57 @@ const App = () => {
       return buffer;
   }
 
+  const changeAmount = (e) => {
+    ubiAmount = e.target.value;
+    setData(GetChartData(ChartGroups, UbI, ubiAmount));
+  }
+
+  function valueText(value) {
+      const fullAmount = value * 452847.241;
+      const amountText = "$" + fullAmount.toFixed(2).replace("^$(0|[1-9][0-9]{0,2})(,d{3})*(.d{1,2})?$");
+      return amountText;
+  }
+
+  const marks = [
+    {
+      value: 0.0022,
+      label: '$1,000',
+    },
+    {
+      value: 0.0265,
+      label: '$12,000',
+    },
+    {
+      value: 0.1325,
+      label: '$60,000',
+    },
+    {
+      value: 0.33,
+      label: '$150,000',
+    }
+  ];
+
   return (
-    <>
-      <FormControlLabel control ={<Switch className="ubiSwitch" />} label="UBI" onChange={applyUbi}/>
-      <BarChart width={400} height={400} data={data} barSize={40}>
+    <div className='visualization'>
+      <Box sx={{ width: 750 }}>
+        <FormControlLabel control ={<Switch className="ubiSwitch" />} label="UBI" onChange={applyUbi}/>
+        <Slider
+          className="ubiSlider"
+          aria-label="Always visible"
+          valueLabelFormat={valueText}
+          min={0}
+          max={0.33}
+          defaultValue={0.0265}
+          step={null}
+          marks={marks}
+          valueLabelDisplay='auto'
+          onChange={changeAmount}
+        />
+      </Box>
+      <BarChart width={750} height={450} data={data} barSize={40}>
         <XAxis dataKey="name" />
-        <YAxis domain={[0, 100]}/>
-        <CartesianGrid horizontal={true} vertical={false} />
+        <YAxis domain={[0, 100]} ticks={[0,25,50,75,100]}/>
+        <CartesianGrid horizontal={true} />
         <Bar dataKey="x" stackId="a">
           {data.map((item, index) => {
             if (item.singleBar) {
@@ -114,7 +157,7 @@ const App = () => {
         </tr>
         </tbody>
       </table>
-    </>)
+    </div>)
 }
 
 export default App;
