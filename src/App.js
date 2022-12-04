@@ -24,7 +24,7 @@ const App = () => {
     },
     "&:hover .MuiSwitch-switchBase": {
       color: "#ff3333"
-    },
+    }
   }
 
   const applyUbi = (e) => {
@@ -125,7 +125,25 @@ const App = () => {
 
   return (
     <div className='visualization'>
-      <Box sx={{ width: 750 }}>
+      <div className='barChart'>
+        <BarChart width={550} height={450} data={data} barSize={40}>
+          <XAxis dataKey="name" />
+          <YAxis domain={[0, 100]} ticks={[0,25,50,75,100]}/>
+          <CartesianGrid horizontal={true} vertical={false}/>
+          <Bar dataKey="x" stackId="a">
+            {data.map((item, index) => {
+              if (item.singleBar) {
+                return <Cell key={index} fill="#9a9cb8" />;
+              } else {
+                return <Cell key={index} fill="#4d79ff" id={index} className="clickableBar" onClick={splitBar} />;
+              }
+            })}
+          </Bar>
+          <Bar dataKey="y" stackId="a" fill="#ff3333"/>
+        </BarChart>
+      </div>
+      <div className='ubiControls'>
+        <Box sx={{ width: 700 }}>
         <FormControlLabel control ={<Switch sx={switchStyle}/>} label="UBI" onChange={applyUbi}/>
         <Slider
           aria-label="Always visible"
@@ -138,22 +156,8 @@ const App = () => {
           valueLabelDisplay='auto'
           onChange={changeAmount}
         />
-      </Box>
-      <BarChart width={550} height={450} data={data} barSize={40}>
-        <XAxis dataKey="name" />
-        <YAxis domain={[0, 100]} ticks={[0,25,50,75,100]}/>
-        <CartesianGrid horizontal={true} vertical={false}/>
-        <Bar dataKey="x" stackId="a">
-          {data.map((item, index) => {
-            if (item.singleBar) {
-              return <Cell key={index} fill="#9a9cb8" />;
-            } else {
-              return <Cell key={index} fill="#4d79ff" id={index} className="clickableBar" onClick={splitBar} />;
-            }
-          })}
-        </Bar>
-        <Bar dataKey="y" stackId="a" fill="#ff3333"/>
-      </BarChart>
+        </Box>
+      </div>
       <div className='mergeButtons'>
         {
           getMergeButtons()

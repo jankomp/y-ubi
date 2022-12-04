@@ -63,6 +63,16 @@
   cursor: pointer;
 }
 
+.barChart {
+  width: 600;
+  display: inline-block;
+}
+
+.ubiControls {
+  margin-left: 3%;
+  display: inline-block;
+}
+
 .clickableBar {
   cursor: pointer;
 }
