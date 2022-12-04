@@ -146,17 +146,13 @@ const App = () => {
           getMergeButtons()
         }
       </div>
-      <table className='personGrids'>
-        <tbody>
-        <tr>
+      <div className='personGrids'>
         {
           data.map((bar) => {
-            return (<td key={bar.name} className='personGrid'>{getPersonGrid(bar)}</td>)
+            return (<div key={bar.name} className='personGrid'>{getPersonGrid(bar)}</div>)
           })
         }
-        </tr>
-        </tbody>
-      </table>
+      </div>
     </div>)
 }
 

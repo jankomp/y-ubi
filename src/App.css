@@ -48,15 +48,17 @@
 }
 
 .mergeButtons {
+  margin-left: 2%;
   width: 750px;
   text-align: center;
   margin-top: -.5%;
 }
 
 .mergeButton {
-  margin-left: 12%;
+  margin-left: 5%;
+  margin-right: 5%;
   display: inline;
-  font-size: small;
+  font-size: medium;
   font-family: poppinsLight;
 }
 
@@ -74,10 +76,13 @@
 }
 
 .personGrid {
+  display: inline-block;
+  margin-left: 7.5%;
 }
 
 .personGrids {
-  margin-left: 5%;
+  width: 750px;
+  text-align: center;
 }
 
 .visualization {
