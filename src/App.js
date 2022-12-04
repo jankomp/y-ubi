@@ -13,6 +13,20 @@ let ubiAmount = 0.0265;
 const App = () => {
   const [data, setData] = useState(GetChartData(ChartGroups, UbI, ubiAmount));
 
+  const switchStyle = {
+    borderRadius: 2,
+    "& .MuiSwitch-switchBase.Mui-checked+.MuiSwitch-track": {
+      backgroundColor: "#ff3C3C",
+      color: "#ff3333"
+    },
+    "& .MuiSwitch-switchBase.Mui-checked": {
+      color: "#ff3333"
+    },
+    "&:hover .MuiSwitch-switchBase": {
+      color: "#ff3333"
+    },
+  }
+
   const applyUbi = (e) => {
     UbI = !UbI;
 
@@ -66,11 +80,11 @@ const App = () => {
       for(let i = 0; i < 100; i++) {
         j += 1;
         let visible = 100 - i > bar.to && 100 - i <= bar.from;
-        let icon = visible ? (<GiPerson size={12}/>) : (<GiPerson size={12} className="invisiblePerson"/>); 
+        let icon = visible ? (<GiPerson size={12} className="person"/>) : (<GiPerson size={12} className="invisiblePerson"/>); 
         if (j === 10)
         {
           j = 0;
-          buffer.push(<>{icon}<br key={"linebreak_" + line}/></>)
+          buffer.push(<>{icon}<br key={"linebreak_" + line} className="lineBreak"/></>)
           line += 1;
         } else {
           buffer.push(icon)
@@ -112,9 +126,8 @@ const App = () => {
   return (
     <div className='visualization'>
       <Box sx={{ width: 750 }}>
-        <FormControlLabel control ={<Switch className="ubiSwitch" />} label="UBI" onChange={applyUbi}/>
+        <FormControlLabel control ={<Switch sx={switchStyle}/>} label="UBI" onChange={applyUbi}/>
         <Slider
-          className="ubiSlider"
           aria-label="Always visible"
           valueLabelFormat={valueText}
           min={0}
@@ -126,7 +139,7 @@ const App = () => {
           onChange={changeAmount}
         />
       </Box>
-      <BarChart width={750} height={450} data={data} barSize={40}>
+      <BarChart width={550} height={450} data={data} barSize={40}>
         <XAxis dataKey="name" />
         <YAxis domain={[0, 100]} ticks={[0,25,50,75,100]}/>
         <CartesianGrid horizontal={true} vertical={false}/>
@@ -135,7 +148,7 @@ const App = () => {
             if (item.singleBar) {
               return <Cell key={index} fill="#9a9cb8" />;
             } else {
-              return <Cell key={index} fill="#4d79ff" id={index} onClick={splitBar} />;
+              return <Cell key={index} fill="#4d79ff" id={index} className="clickableBar" onClick={splitBar} />;
             }
           })}
         </Bar>

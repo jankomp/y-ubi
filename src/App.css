@@ -49,26 +49,22 @@
 
 .mergeButtons {
   margin-left: 2%;
-  width: 750px;
+  width: 550px;
   text-align: center;
-  margin-top: -.5%;
+  margin-top: -.7%;
 }
 
 .mergeButton {
-  margin-left: 5%;
-  margin-right: 5%;
+  margin-left: 2%;
+  margin-right: 2%;
   display: inline;
   font-size: medium;
   font-family: poppinsLight;
+  cursor: pointer;
 }
 
-.ubiSwitch {
-  fill: "#ff3333";
-}
-
-.person {
-  display: inline;
-  margin-top: -5%;
+.clickableBar {
+  cursor: pointer;
 }
 
 .invisiblePerson {
@@ -77,11 +73,14 @@
 
 .personGrid {
   display: inline-block;
-  margin-left: 7.5%;
+  margin-left: 2.5%;
+  line-height: 11px;
 }
 
 .personGrids {
-  width: 750px;
+  margin-top: 1%;
+  margin-left: 1.5%;
+  width: 550px;
   text-align: center;
 }
 
