@@ -1,3 +1,13 @@
+@font-face {
+  font-family: poppinsBlack;
+  src: url(./res/Poppins-Black.ttf);
+}
+
+@font-face {
+  font-family: poppinsLight;
+  src: url(./res/Poppins-Light.ttf);
+}
+
 .App {
   text-align: center;
 }
@@ -38,13 +48,16 @@
 }
 
 .mergeButtons {
-  margin-left: 7%;
+  width: 750px;
+  text-align: center;
+  margin-top: -.5%;
 }
 
 .mergeButton {
-  margin-left: 2%;
+  margin-left: 12%;
   display: inline;
   font-size: small;
+  font-family: poppinsLight;
 }
 
 .ubiSwitch {
@@ -61,8 +74,6 @@
 }
 
 .personGrid {
-  margin-left: 4%;
-  margin-right: 4%;
 }
 
 .personGrids {

@@ -53,7 +53,7 @@ const App = () => {
   function getMergeButtons() {
     let buffer = [];
     for(let i = 0; i < data.length - 1; i++) {
-      buffer.push(<p className='mergeButton' key={i} id={i} onClick={groupBars}>&gt;&gt;&gt;&gt;  &lt;&lt;&lt;&lt;</p>);
+      buffer.push(<p className='mergeButton' key={i} id={i} onClick={groupBars}>&gt;&gt;&gt;&gt;&gt;  &lt;&lt;&lt;&lt;&lt;</p>);
     }
     return buffer;
   }
@@ -129,7 +129,7 @@ const App = () => {
       <BarChart width={750} height={450} data={data} barSize={40}>
         <XAxis dataKey="name" />
         <YAxis domain={[0, 100]} ticks={[0,25,50,75,100]}/>
-        <CartesianGrid horizontal={true} />
+        <CartesianGrid horizontal={true} vertical={false}/>
         <Bar dataKey="x" stackId="a">
           {data.map((item, index) => {
             if (item.singleBar) {
