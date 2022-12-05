@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { Switch, FormControlLabel, Slider, Box } from '@mui/material';
 import GetChartData from './ChartData';
@@ -6,6 +6,12 @@ import { GiPerson } from "react-icons/gi";
 
 import './App.css';
 import moneyImg from './res/money.png'
+import moneyBag from './res/moneybag.png'
+import vat from './res/vat.png'
+import gov from './res/gov.png'
+import industry from './res/industry.png'
+import stock from './res/stock.png'
+import tax from './res/tax.png'
 
 
 let UbI = false;
@@ -13,8 +19,8 @@ let ChartGroups = Array.from([[0, 1, 2, 3]]);
 
 let ubiAmount = 0.0265;
 
-let personBuffer = [];
 let moneyStart = {x: 750, y: 500};
+const moneySteps = 50;
 let vectors = [];
 
 const App = () => {
@@ -90,10 +96,10 @@ const App = () => {
       for(let i = 0; i < 100; i++) {
         j += 1;
         let visible = 100 - i > bar.to && 100 - i <= bar.from;
-        let icon = visible ? (<GiPerson size={12} className="person"/>) : (<GiPerson size={12} className="invisiblePerson"/>); 
-        if (visible) {
-          personBuffer.push(icon);
-        }
+        let icon = visible ?
+          (<GiPerson size={12} className="person" key={"person_" + i} id={"person_" + i}/>) :
+          (<GiPerson size={12} className="invisiblePerson" key={"invisiblePerson_" + i} id={"invisiblePerson_" + i}/>); 
+        
         if (j === 10)
         {
           j = 0;
@@ -155,18 +161,16 @@ const App = () => {
   }
 
   function findAnimationVectors() {
-    let goal, start, direction;
+    vectors = [];
+    let goal, direction;
     for(let i = 0; i < 100; i++) {
-      //const x = personBuffer[i].getBoundingClientRect().x + personBuffer[i].getBoundingClientRect().width/2;
-      //const y = personBuffer[i].getBoundingClientRect().y + personBuffer[i].getBoundingClientRect().height/2;
-      //DEBUG:
-      const x = 265, y = 457;
+      let clientRect = document.getElementById("person_" + i).getBoundingClientRect();
+      const x = clientRect.x - clientRect.width;
+      const y = clientRect.y;
 
       goal = {x: x, y: y};
       
-      start = {x: moneyStart.x, y: moneyStart.y};
-
-      direction = {x: (goal.x - start.x) / 75.0, y: (goal.y - start.y) / 75.0};
+      direction = {x: (goal.x - moneyStart.x) / moneySteps, y: (goal.y - moneyStart.y) / moneySteps};
       vectors.push(direction);
     }
   }
@@ -177,19 +181,24 @@ const App = () => {
 
   async function animation() {
     findAnimationVectors();
-    for(let i = 0; i < 75; i++) {
-      moneyPos[0] = {x: moneyPos[0].x + vectors[0].x, y: moneyPos[0].y + vectors[0].y};
-      //console.log(moneyPos[0]);
-      setMoneyPos(moneyPos.map((item) => ({x: item.x + vectors[i].x, y: item.y + vectors[i].y})));
-      await sleep(5);
+    for(let i = 0; i < moneySteps; i++) {
+      setMoneyPos(moneyPos.map((item) => ({x: item.x + i*vectors[moneyPos.indexOf(item)].x, y: item.y + i*vectors[moneyPos.indexOf(item)].y})));
+
+      await sleep(7.5);
     }
-    await sleep(500)
+    await sleep(750)
     setMoneyPos([]);
   }
 
   return (
     <div className='visualization'>
       {getMoney()}
+      <img src={moneyBag} alt="moneybag" style={{position:'absolute', transform: 'translate(700px, 445px)', width: '180px'}}/>
+      <img src={gov} alt="vat" style={{position:'absolute', transform: 'translate(925px, 475px)', width: '130px'}}/>
+      <img src={stock} alt="vat" style={{position:'absolute', transform: 'translate(1175px, 450px)', width: '115px'}}/>
+      <img src={industry} alt="vat" style={{position:'absolute', transform: 'translate(1075px, 469px)', width: '140px'}}/>
+      <img src={tax} alt="vat" style={{position:'absolute', transform: 'translate(875px, 475px)', width: '100px'}}/>
+      <img src={vat} alt="vat" style={{position:'absolute', transform: 'translate(1125px, 485px)', width: '120px'}}/>
       <div className='barChart'>
         <BarChart width={550} height={450} data={data} barSize={40}>
           <XAxis dataKey="name" />
