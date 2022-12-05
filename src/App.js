@@ -3,7 +3,10 @@ import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { Switch, FormControlLabel, Slider, Box } from '@mui/material';
 import GetChartData from './ChartData';
 import { GiPerson } from "react-icons/gi";
+
 import './App.css';
+import moneyImg from './res/money.png'
+
 
 let UbI = false;
 let ChartGroups = Array.from([[0, 1, 2, 3]]);
@@ -74,7 +77,7 @@ const App = () => {
 
   function getPersonGrid(bar) {
       let buffer = [];
-      const size = bar.from - bar.to;
+
       let j = 0;
       let line = 0;
       for(let i = 0; i < 100; i++) {
@@ -123,6 +126,14 @@ const App = () => {
     }
   ];
 
+  function getMoney() {
+    let buffer = [];
+    for(let i = 1; i <= 100; i++) {
+      buffer.push(<img src={moneyImg} alt="wad of money" key={"money_" + i} id={i} className="money_start"></img>)
+    }
+    return buffer;
+  }
+
   return (
     <div className='visualization'>
       <div className='barChart'>
@@ -170,6 +181,7 @@ const App = () => {
           })
         }
       </div>
+      {getMoney()}
     </div>)
 }
 

@@ -78,7 +78,14 @@
 }
 
 .invisiblePerson {
-  visibility: hidden;
+  opacity: 7.5%;
+  margin-left: -.1px;
+  margin-right: -.1px;
+}
+
+.person {
+  margin-left: -.1px;
+  margin-right: -.1px;
 }
 
 .personGrid {
@@ -96,4 +103,11 @@
 
 .visualization {
   width: 100%;
+}
+
+.money_start {
+  position: absolute;
+  top: 85%;
+  left: 60%;
+  width: 1%;
 }
