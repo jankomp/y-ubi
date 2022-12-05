@@ -1,17 +1,17 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid } from 'recharts';
-import { Switch, FormControlLabel, Slider, Box } from '@mui/material';
+import { Switch, FormControlLabel, Slider, Box, Typography } from '@mui/material';
 import GetChartData from './ChartData';
 import { GiPerson } from "react-icons/gi";
 
 import './App.css';
-import moneyImg from './res/money.png'
-import moneyBag from './res/moneybag.png'
-import vat from './res/vat.png'
-import gov from './res/gov.png'
-import industry from './res/industry.png'
-import stock from './res/stock.png'
-import tax from './res/tax.png'
+import moneyImg from './res/money.png';
+import moneyBag from './res/moneybag.png';
+import vat from './res/vat.png';
+import gov from './res/gov.png';
+import industry from './res/industry.png';
+import stock from './res/stock.png';
+import tax from './res/tax.png';
 
 
 let UbI = false;
@@ -216,9 +216,16 @@ const App = () => {
           <Bar dataKey="y" stackId="a" fill="#ff3333"/>
         </BarChart>
       </div>
+      <h1 className="title">Why ubi?</h1>
+      <p className="description">The bar chart shows the total wealth of the US population in the first quarter of 2022 in percent.
+        Click on blue bars to have it split up into two groups of wealthier and poorer people (from left to right).
+        When you click on the arrows at the bottom two neighboring bars can be merged together again.<br/>
+        If you click the UBI switch a one-time payment of the same amount for every US citizen is calculated and the effect is shown on the graph.
+        Use the slider to choose a different amount of that payment.
+      </p>
       <div className='ubiControls'>
         <Box sx={{ width: 700 }}>
-        <FormControlLabel control ={<Switch sx={switchStyle}/>} label="UBI" onChange={applyUbi}/>
+        <FormControlLabel control ={<Switch sx={switchStyle}/>} label={<Typography variant="h5">ubi</Typography>} onChange={applyUbi}/>
         <Slider
           aria-label="Always visible"
           valueLabelFormat={valueText}
