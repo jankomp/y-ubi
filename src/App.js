@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { Switch, FormControlLabel, Slider, Box } from '@mui/material';
 import GetChartData from './ChartData';
@@ -13,8 +13,13 @@ let ChartGroups = Array.from([[0, 1, 2, 3]]);
 
 let ubiAmount = 0.0265;
 
+let personBuffer = [];
+let moneyStart = {x: 750, y: 500};
+let vectors = [];
+
 const App = () => {
   const [data, setData] = useState(GetChartData(ChartGroups, UbI, ubiAmount));
+  const [moneyPos, setMoneyPos] = useState([]);
 
   const switchStyle = {
     borderRadius: 2,
@@ -30,9 +35,11 @@ const App = () => {
     }
   }
 
-  const applyUbi = (e) => {
+  const applyUbi = async(e) => {
     UbI = !UbI;
-
+    if(UbI) {
+      await animation();
+    }
     setData(GetChartData(ChartGroups, UbI, ubiAmount));
   }
 
@@ -84,13 +91,16 @@ const App = () => {
         j += 1;
         let visible = 100 - i > bar.to && 100 - i <= bar.from;
         let icon = visible ? (<GiPerson size={12} className="person"/>) : (<GiPerson size={12} className="invisiblePerson"/>); 
+        if (visible) {
+          personBuffer.push(icon);
+        }
         if (j === 10)
         {
           j = 0;
           buffer.push(<>{icon}<br key={"linebreak_" + line} className="lineBreak"/></>)
           line += 1;
         } else {
-          buffer.push(icon)
+          buffer.push(icon);
         }
       }
       return buffer;
@@ -127,15 +137,59 @@ const App = () => {
   ];
 
   function getMoney() {
-    let buffer = [];
-    for(let i = 1; i <= 100; i++) {
-      buffer.push(<img src={moneyImg} alt="wad of money" key={"money_" + i} id={i} className="money_start"></img>)
+    let moneyBuffer = [];
+    for(let i = 0; i < 100; i++) {
+      let x, y;
+      if (moneyPos.length > i) {
+        x = moneyPos[i].x;
+        y = moneyPos[i].y;
+      } else {
+        x = moneyStart.x;
+        y = moneyStart.y;
+        moneyPos.push({x: moneyStart.x, y: moneyStart.y});
+      }
+      const mTransform = 'translate(' + x + 'px, ' + y + 'px)';
+      moneyBuffer.push(<img src={moneyImg} alt="wad of money" key={"money_" + i} id={i} style={{position:'absolute', transform: mTransform, width: '1%'}}/>)
     }
-    return buffer;
+    return moneyBuffer;
+  }
+
+  function findAnimationVectors() {
+    let goal, start, direction;
+    for(let i = 0; i < 100; i++) {
+      //const x = personBuffer[i].getBoundingClientRect().x + personBuffer[i].getBoundingClientRect().width/2;
+      //const y = personBuffer[i].getBoundingClientRect().y + personBuffer[i].getBoundingClientRect().height/2;
+      //DEBUG:
+      const x = 265, y = 457;
+
+      goal = {x: x, y: y};
+      
+      start = {x: moneyStart.x, y: moneyStart.y};
+
+      direction = {x: (goal.x - start.x) / 75.0, y: (goal.y - start.y) / 75.0};
+      vectors.push(direction);
+    }
+  }
+
+  const sleep = ms => new Promise(
+    resolve => setTimeout(resolve, ms)
+  );
+
+  async function animation() {
+    findAnimationVectors();
+    for(let i = 0; i < 75; i++) {
+      moneyPos[0] = {x: moneyPos[0].x + vectors[0].x, y: moneyPos[0].y + vectors[0].y};
+      //console.log(moneyPos[0]);
+      setMoneyPos(moneyPos.map((item) => ({x: item.x + vectors[i].x, y: item.y + vectors[i].y})));
+      await sleep(5);
+    }
+    await sleep(500)
+    setMoneyPos([]);
   }
 
   return (
     <div className='visualization'>
+      {getMoney()}
       <div className='barChart'>
         <BarChart width={550} height={450} data={data} barSize={40}>
           <XAxis dataKey="name" />
@@ -181,7 +235,6 @@ const App = () => {
           })
         }
       </div>
-      {getMoney()}
     </div>)
 }
 
