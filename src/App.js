@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid } from 'recharts';
+import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
 import { Switch, FormControlLabel, Slider, Box, Typography } from '@mui/material';
 import GetChartData from './ChartData';
 import { GiPerson } from "react-icons/gi";
@@ -193,12 +193,12 @@ const App = () => {
   return (
     <div className='visualization'>
       {getMoney()}
-      <img src={moneyBag} alt="moneybag" style={{position:'absolute', transform: 'translate(700px, 445px)', width: '180px'}}/>
-      <img src={gov} alt="vat" style={{position:'absolute', transform: 'translate(925px, 475px)', width: '130px'}}/>
-      <img src={stock} alt="vat" style={{position:'absolute', transform: 'translate(1175px, 450px)', width: '115px'}}/>
-      <img src={industry} alt="vat" style={{position:'absolute', transform: 'translate(1075px, 469px)', width: '140px'}}/>
-      <img src={tax} alt="vat" style={{position:'absolute', transform: 'translate(875px, 475px)', width: '100px'}}/>
-      <img src={vat} alt="vat" style={{position:'absolute', transform: 'translate(1125px, 485px)', width: '120px'}}/>
+      <img src={moneyBag} alt="moneybag" style={{position:'absolute', transform: 'translate(700px, 455px)', width: '150px'}}/>
+      <img src={gov} alt="vat" style={{position:'absolute', transform: 'translate(935px, 493px)', width: '110px'}}/>
+      <img src={stock} alt="vat" style={{position:'absolute', transform: 'translate(1150px, 478px)', width: '130px'}}/>
+      <img src={industry} alt="vat" style={{position:'absolute', transform: 'translate(1040px, 469px)', width: '140px'}}/>
+      <img src={tax} alt="vat" style={{position:'absolute', transform: 'translate(875px, 475px)', width: '80px'}}/>
+      <img src={vat} alt="vat" style={{position:'absolute', transform: 'translate(1000px, 445px)', width: '80px'}}/>
       <div className='barChart'>
         <BarChart width={550} height={450} data={data} barSize={40}>
           <XAxis dataKey="name" />
@@ -218,10 +218,10 @@ const App = () => {
       </div>
       <h1 className="title">Why ubi?</h1>
       <p className="description">The bar chart shows the total wealth of the US population in the first quarter of 2022 in percent.
-        Click on blue bars to have it split up into two groups of wealthier and poorer people (from left to right).
-        When you click on the arrows at the bottom two neighboring bars can be merged together again.<br/>
+        Click on blue bars to have them split up into two groups of wealthier and poorer people (from left to right).
+        When you click on the arrows at the bottom of two neighboring bars they can be merged together again.<br/>
         If you click the UBI switch a one-time payment of the same amount for every US citizen is calculated and the effect is shown on the graph.
-        Use the slider to choose a different amount of that payment.
+        Use the slider to choose a different amount.
       </p>
       <div className='ubiControls'>
         <Box sx={{ width: 700 }}>
