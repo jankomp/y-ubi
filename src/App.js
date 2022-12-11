@@ -12,6 +12,7 @@ import gov from './res/gov.png';
 import industry from './res/industry.png';
 import stock from './res/stock.png';
 import tax from './res/tax.png';
+import usa from './res/usa.png';
 
 
 let UbI = false;
@@ -41,10 +42,13 @@ const App = () => {
     }
   }
 
-  const applyUbi = async(e) => {
+  const applyUbi = async() => {
     UbI = !UbI;
     if(UbI) {
       await animation();
+    } else {
+      vectors = [];
+      setMoneyPos([]);
     }
     setData(GetChartData(ChartGroups, UbI, ubiAmount));
   }
@@ -209,6 +213,7 @@ const App = () => {
   return (
     <div className='visualization'>
       {getMoney()}
+      <img src={usa} alt="usa" style={{position:'absolute', transform: 'translate(750px, 300px)', width: '500px'}}/>
       <img src={moneyBag} alt="moneybag" style={{position:'absolute', transform: 'translate(700px, 455px)', width: '150px'}}/>
       <img src={gov} alt="vat" style={{position:'absolute', transform: 'translate(935px, 493px)', width: '110px'}}/>
       <img src={stock} alt="vat" style={{position:'absolute', transform: 'translate(1150px, 478px)', width: '130px'}}/>
