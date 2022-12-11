@@ -181,12 +181,28 @@ const App = () => {
 
   async function animation() {
     findAnimationVectors();
+    //coins fly to person icons
     for(let i = 0; i < moneySteps; i++) {
+      const sleepUntil = Date.now() + 20;
       setMoneyPos(moneyPos.map((item) => ({x: item.x + i*vectors[moneyPos.indexOf(item)].x, y: item.y + i*vectors[moneyPos.indexOf(item)].y})));
 
-      await sleep(7.5);
+      const sleepFor = sleepUntil - Date.now();
+      if (sleepFor > 0) {
+        await sleep(sleepFor);
+      }
     }
-    await sleep(750)
+    await sleep(250)
+
+    //coins fly straight up
+    for(let i = 0; i < 10; i++) {
+      const sleepUntil = Date.now() + 20;
+      setMoneyPos(moneyPos.map((item) => ({x: item.x + (moneySteps-1)*vectors[moneyPos.indexOf(item)].x, y: item.y + (moneySteps-1)*vectors[moneyPos.indexOf(item)].y - i*7})));
+
+      const sleepFor = sleepUntil - Date.now();
+      if (sleepFor > 0) {
+        await sleep(sleepFor);
+      }
+    }
     setMoneyPos([]);
   }
 
