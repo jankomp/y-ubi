@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid, Tooltip } from 'recharts';
+import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { Switch, FormControlLabel, Slider, Box, Typography } from '@mui/material';
-import GetChartData from './ChartData';
 import { GiPerson } from "react-icons/gi";
+import GetChartData from './ChartData';
+import CustomTooltip, { useTooltipContext } from "./CustomTooltip";
 
 import './App.css';
 import moneyImg from './res/money.png';
@@ -27,6 +28,25 @@ let vectors = [];
 const App = () => {
   const [data, setData] = useState(GetChartData(ChartGroups, UbI, ubiAmount));
   const [moneyPos, setMoneyPos] = useState([]);
+  const { openTooltip, closeTooltip } = useTooltipContext();
+
+  //This is where you create content to go inside of the tooltip
+  const tooltipContent = (amount) => {
+    return <div>{"$" + (amount * 1503).toFixed(0).replace("/^\d{1,3}(,\d{3})*(\.\d+)?$/") + " bil"}</div>;
+  };
+
+  //This is where you style the tooltip wrapper
+  const tooltipStyle = {
+    backgroundColor: "#757575",
+    color: "#ffffff",
+    borderColor: "black",
+    borderStyle: "solid",
+    borderWidth: 0,
+    borderRadius: "3%",
+    fontFamily: "poppinsLight",
+    fontSize: "16px",
+    padding: ".5%"
+  };
 
   const switchStyle = {
     borderRadius: 2,
@@ -228,13 +248,35 @@ const App = () => {
           <Bar dataKey="x" stackId="a">
             {data.map((item, index) => {
               if (item.singleBar) {
-                return <Cell key={index} fill="#9a9cb8" />;
+                return <Cell key={index} fill="#9a9cb8" onMouseEnter={() =>
+                          openTooltip({
+                            content: tooltipContent(item.x),
+                            style: tooltipStyle
+                          })
+                        }
+                        onMouseLeave={() => closeTooltip()}/>;
               } else {
-                return <Cell key={index} fill="#4d79ff" id={index} className="clickableBar" onClick={splitBar} />;
+                return <Cell key={index} fill="#4d79ff" id={index} className="clickableBar" onClick={splitBar} onMouseEnter={() =>
+                          openTooltip({
+                            content: tooltipContent(item.x),
+                            style: tooltipStyle
+                          })
+                        }
+                        onMouseLeave={() => closeTooltip()}/>;
               }
             })}
           </Bar>
-          <Bar dataKey="y" stackId="a" fill="#ff3333"/>
+          <Bar dataKey="y" stackId="a">
+            {data.map((item, index) => {
+              return <Cell key={index} fill="#ff3333" onMouseEnter={() =>
+                openTooltip({
+                  content: tooltipContent(item.y),
+                  style: tooltipStyle
+                })
+              }
+              onMouseLeave={() => closeTooltip()}/>;
+            })}
+          </Bar>
         </BarChart>
       </div>
       <h1 className="title">Why ubi?</h1>

@@ -6,6 +6,7 @@ import reportWebVitals from './reportWebVitals';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import poppinsLight from './res/Poppins-Light.ttf'
+import CustomTooltip from './CustomTooltip';
 
 const theme = createTheme({
   typography: {
@@ -31,7 +32,9 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
-      <App />
+      <CustomTooltip>
+        <App />
+      </CustomTooltip>
     </ThemeProvider>
   </React.StrictMode>
 );
