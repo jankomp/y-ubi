@@ -1,6 +1,7 @@
 {
   "hosting": {
-    "public": "public",
+    "site": "why-ubi",
+    "public": "build",
     "headers": [
       {"source": "/index.js", "headers": [{"key": "Cache-Control", "value": "no-cache"}]}
     ],

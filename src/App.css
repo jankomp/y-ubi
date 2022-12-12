@@ -71,6 +71,7 @@
 .ubiControls {
   margin-left: 3%;
   display: inline-block;
+  width: 650px;
 }
 
 .clickableBar {
@@ -116,6 +117,7 @@
   position: absolute;
   top: -20px;
   left: 653.68px;
+  width: 640px;
   font-family: poppinsBlack;
 }
 
@@ -125,5 +127,5 @@
   left: 653.68px;
   font-family: poppinsLight;
   text-align: justify;
-  padding-right: 13.92px;
+  width: 640px;
 }

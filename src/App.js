@@ -3,7 +3,7 @@ import { BarChart, Bar, Cell, XAxis, YAxis, CartesianGrid } from 'recharts';
 import { Switch, FormControlLabel, Slider, Box, Typography } from '@mui/material';
 import { GiPerson } from "react-icons/gi";
 import GetChartData from './ChartData';
-import CustomTooltip, { useTooltipContext } from "./CustomTooltip";
+import { useTooltipContext } from "./CustomTooltip";
 
 import './App.css';
 import moneyImg from './res/money.png';
@@ -14,6 +14,7 @@ import industry from './res/industry.png';
 import stock from './res/stock.png';
 import tax from './res/tax.png';
 import usa from './res/usa.png';
+import usafull from './res/usa_full.png';
 
 
 let UbI = false;
@@ -32,7 +33,7 @@ const App = () => {
 
   //This is where you create content to go inside of the tooltip
   const tooltipContent = (amount) => {
-    return <div>{"$" + (amount * 1503).toFixed(0).replace("/^\d{1,3}(,\d{3})*(\.\d+)?$/") + " bil"}</div>;
+    return <div>{"$" + (amount * 1.503).toFixed(2) + " trillion"}</div>;
   };
 
   //This is where you style the tooltip wrapper
@@ -233,7 +234,7 @@ const App = () => {
   return (
     <div className='visualization'>
       {getMoney()}
-      <img src={usa} alt="usa" style={{position:'absolute', transform: 'translate(750px, 300px)', width: '500px'}}/>
+      <img src={usafull} alt="usa" style={{position:'absolute', transform: 'translate(750px, 140px)', width: '500px'}}/>
       <img src={moneyBag} alt="moneybag" style={{position:'absolute', transform: 'translate(700px, 455px)', width: '150px'}}/>
       <img src={gov} alt="vat" style={{position:'absolute', transform: 'translate(935px, 493px)', width: '110px'}}/>
       <img src={stock} alt="vat" style={{position:'absolute', transform: 'translate(1150px, 478px)', width: '130px'}}/>
@@ -287,7 +288,7 @@ const App = () => {
         Use the slider to choose a different amount.
       </p>
       <div className='ubiControls'>
-        <Box sx={{ width: 700 }}>
+        <Box sx={{ width: 680 }}>
         <FormControlLabel control ={<Switch sx={switchStyle}/>} label={<Typography variant="h5">ubi</Typography>} onChange={applyUbi}/>
         <Slider
           aria-label="Always visible"
